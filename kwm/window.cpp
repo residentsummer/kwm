@@ -217,7 +217,7 @@ EVENT_CALLBACK(Callback_AXEvent_SpaceChanged)
            (AXLibSpaceHasWindow(FocusedApplication->Focus, Display->Space->ID)))
         {
             DrawFocusedBorder(Display);
-            MoveCursorToCenterOfWindow(FocusedApplication->Focus);
+            MoveCursorToWindow(FocusedApplication->Focus);
             Display->Space->FocusedWindow = FocusedApplication->Focus->ID;
         }
     }
@@ -232,7 +232,7 @@ EVENT_CALLBACK(Callback_AXEvent_SpaceChanged)
         {
             AXLibSetFocusedWindow(Window);
             DrawFocusedBorder(Display);
-            MoveCursorToCenterOfWindow(Window);
+            MoveCursorToWindow(Window);
         }
     }
 
@@ -1150,7 +1150,7 @@ void DetachAndReinsertWindow(unsigned int WindowID, int Degrees)
         ToggleWindowFloating(WindowID, false);
         ClearMarkedWindow();
         ToggleWindowFloating(WindowID, false);
-        MoveCursorToCenterOfFocusedWindow();
+        MoveCursorToFocusedWindow();
     }
     else
     {
@@ -1167,7 +1167,7 @@ void DetachAndReinsertWindow(unsigned int WindowID, int Degrees)
             ax_window *PrevMarkedWindow = MarkedWindow;
             MarkedWindow = ClosestWindow;
             ToggleWindowFloating(WindowID, false);
-            MoveCursorToCenterOfFocusedWindow();
+            MoveCursorToFocusedWindow();
             MarkedWindow = PrevMarkedWindow;
         }
     }
@@ -1191,7 +1191,7 @@ void SwapFocusedWindowWithMarked()
         if(NewFocusNode)
         {
             SwapNodeWindowIDs(TreeNode, NewFocusNode);
-            MoveCursorToCenterOfFocusedWindow();
+            MoveCursorToFocusedWindow();
         }
     }
 
@@ -1231,7 +1231,7 @@ void SwapFocusedWindowWithNearest(int Shift)
             if(ShiftNode)
             {
                 SwapNodeWindowIDs(Link, ShiftNode);
-                MoveCursorToCenterOfWindow(Window);
+                MoveCursorToWindow(Window);
             }
         }
     }
@@ -1250,7 +1250,7 @@ void SwapFocusedWindowWithNearest(int Shift)
             if(NewFocusNode)
             {
                 SwapNodeWindowIDs(TreeNode, NewFocusNode);
-                MoveCursorToCenterOfWindow(Window);
+                MoveCursorToWindow(Window);
             }
         }
     }
@@ -1285,7 +1285,7 @@ void SwapFocusedWindowDirected(int Degrees)
                 SwapNodeWindowIDs(TreeNode, NewFocusNode);
                 Window->Position = AXLibGetWindowPosition(Window->Ref);
                 Window->Size = AXLibGetWindowSize(Window->Ref);
-                MoveCursorToCenterOfWindow(Window);
+                MoveCursorToWindow(Window);
             }
         }
     }
@@ -1437,7 +1437,7 @@ void ShiftWindowFocusDirected(int Degrees)
             FindClosestWindow(Degrees, &ClosestWindow, true)))
         {
             AXLibSetFocusedWindow(ClosestWindow);
-            MoveCursorToCenterOfWindow(ClosestWindow);
+            MoveCursorToWindow(ClosestWindow);
         }
     }
     else if(SpaceInfo->Settings.Mode == SpaceModeMonocle)
@@ -1487,7 +1487,7 @@ void ShiftWindowFocus(int Shift)
             if(FocusNode)
             {
                 SetWindowFocusByNode(FocusNode);
-                MoveCursorToCenterOfFocusedWindow();
+                MoveCursorToFocusedWindow();
             }
         }
     }
@@ -1526,7 +1526,7 @@ void ShiftWindowFocus(int Shift)
             }
 
             SetWindowFocusByNode(FocusNode);
-            MoveCursorToCenterOfFocusedWindow();
+            MoveCursorToFocusedWindow();
         }
     }
 }
@@ -1563,7 +1563,7 @@ void ShiftSubTreeWindowFocus(int Shift)
                     SetWindowFocusByNode(Root);
             }
 
-            MoveCursorToCenterOfFocusedWindow();
+            MoveCursorToFocusedWindow();
         }
         else if(Shift == 1)
         {
@@ -1571,7 +1571,7 @@ void ShiftSubTreeWindowFocus(int Shift)
             if(Root)
             {
                 SetWindowFocusByNode(Root->List);
-                MoveCursorToCenterOfFocusedWindow();
+                MoveCursorToFocusedWindow();
             }
         }
     }

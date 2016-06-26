@@ -5,7 +5,9 @@
 #include <Carbon/Carbon.h>
 
 void FocusWindowBelowCursor();
-void MoveCursorToCenterOfWindow(ax_window *Window);
-void MoveCursorToCenterOfFocusedWindow();
+void MoveCursorToFocusedWindow();
+void MoveCursorToWindow(ax_window *Window);
+void MoveCursorToFocusedWindow(bool Recenter);
+void MoveCursorToWindow(ax_window *Window, bool Recenter);
 
 #endif

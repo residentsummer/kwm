@@ -31,21 +31,32 @@ IsWindowBelowCursor(ax_window *Window)
     return false;
 }
 
-void MoveCursorToCenterOfWindow(ax_window *Window)
+void MoveCursorToWindow(ax_window *Window)
 {
-    if(KWMSettings.UseMouseFollowsFocus)
+    MoveCursorToWindow(Window, false);
+}
+
+void MoveCursorToWindow(ax_window *Window, bool Recenter)
+{
+    if((KWMSettings.UseMouseFollowsFocus) &&
+       (!IsWindowBelowCursor(Window) || Recenter))
     {
         CGWarpMouseCursorPosition(CGPointMake(Window->Position.x + Window->Size.width / 2,
                                               Window->Position.y + Window->Size.height / 2));
     }
 }
 
-void MoveCursorToCenterOfFocusedWindow()
+void MoveCursorToFocusedWindow()
+{
+    MoveCursorToFocusedWindow(false);
+}
+
+void MoveCursorToFocusedWindow(bool Recenter)
 {
     if(KWMSettings.UseMouseFollowsFocus &&
        FocusedApplication &&
        FocusedApplication->Focus)
-        MoveCursorToCenterOfWindow(FocusedApplication->Focus);
+        MoveCursorToWindow(FocusedApplication->Focus, Recenter);
 }
 
 
